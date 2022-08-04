@@ -1,0 +1,20 @@
+﻿<style >
+body {
+    color: red;
+}
+
+.testing {
+    color: blue;
+}
+
+
+h1 {
+    color: #FFCC00;
+}
+
+p {
+    color: rgba(0, 255, 0, 0.5);
+    background: darkgreen;
+}
+
+</style >
