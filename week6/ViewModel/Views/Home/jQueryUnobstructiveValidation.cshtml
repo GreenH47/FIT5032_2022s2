@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "jQueryUnobstructiveValidation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>jQueryUnobstructiveValidation</h2>
+<h3><a href="https://www.geeksforgeeks.org/what-is-unobtrusive-validation-in-jquery/">Code template</a></h3>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!--These validation libraries need to be
+    included for unobtrusive validation -->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+</head>
+<body>
+    <form id="myform">
+        <p>
+            <label for="roll">Roll no.</label>
+            <!-- data-val-required is used to
+               specify the msg for each rule -->
+            <!-- data-val is used to add rules to
+                  the input elements -->
+            <input name="roll"
+                   type="number"
+                   data-val-required="Roll no. is required."
+                   data-val="true"
+                   style="margin-left: 15px;" /><br />
+            <span data-valmsg-for="roll"
+                  data-valmsg-replace="true"
+                  style="margin-left: 75px; color: red;" />
+        </p>
+        <p>
+            <label for="name">Name</label>
+
+            <input name="name"
+                   type="text"
+                   data-val-required="Name is required."
+                   data-val="true"
+                   style="margin-left: 30px;" /><br />
+            <span data-valmsg-for="name"
+                  data-valmsg-replace="true"
+                  style="margin-left: 75px; color: red;" />
+        </p>
+        <p>
+            <label for="mobile">Mobile no.</label>
+            <input name="mobile"
+                   type="number"
+                   data-val-required="Mobile no. is required."
+                   data-val="true" /><br />
+            <span data-valmsg-for="mobile"
+                  data-valmsg-replace="true"
+                  style="margin-left: 78px; color: red;" />
+        </p>
+
+        <p>
+            <label for="email">E-Mail </label>
+            <input type="email" name="email"
+                   data-val-required="Email is required."
+                   data-val="true"
+                   style="margin-left: 30px;" /><br />
+            <span data-valmsg-for="email"
+                  data-valmsg-replace="true"
+                  style="margin-left: 80px; color: red;" />
+        </p>
+
+        <p>
+            <input class="submit"
+                   type="submit"
+                   value="Submit" />
+        </p>
+    </form>
+</body>
+</html>
