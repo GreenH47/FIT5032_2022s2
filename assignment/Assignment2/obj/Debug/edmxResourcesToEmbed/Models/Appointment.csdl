@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Appointment" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="AppointmentContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Doctors" EntityType="Appointment.Doctor" />
+    <EntitySet Name="Bookings" EntityType="Appointment.Booking" />
+    <EntitySet Name="Patients" EntityType="Appointment.Patient" />
+    <EntitySet Name="Comments" EntityType="Appointment.Comment" />
+    <EntitySet Name="Introductions" EntityType="Appointment.Introduction" />
+    <AssociationSet Name="BookingPatient" Association="Appointment.BookingPatient">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Patient" EntitySet="Patients" />
+    </AssociationSet>
+    <AssociationSet Name="BookingDoctor" Association="Appointment.BookingDoctor">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Doctor" EntitySet="Doctors" />
+    </AssociationSet>
+    <AssociationSet Name="BookingComment" Association="Appointment.BookingComment">
+      <End Role="Booking" EntitySet="Bookings" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorIntroduction" Association="Appointment.DoctorIntroduction">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Introduction" EntitySet="Introductions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <Property Name="UserId" Type="String" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Appointment.BookingDoctor" FromRole="Doctor" ToRole="Booking" />
+    <NavigationProperty Name="Introductions" Relationship="Appointment.DoctorIntroduction" FromRole="Doctor" ToRole="Introduction" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="String" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="Appointment.BookingPatient" FromRole="Booking" ToRole="Patient" />
+    <Property Name="PatientId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="Appointment.BookingDoctor" FromRole="Booking" ToRole="Doctor" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Comments" Relationship="Appointment.BookingComment" FromRole="Booking" ToRole="Comment" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <NavigationProperty Name="Bookings" Relationship="Appointment.BookingPatient" FromRole="Patient" ToRole="Booking" />
+    <Property Name="UserId" Type="String" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Star" Type="Int16" Nullable="false" />
+    <Property Name="Word" Type="String" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Appointment.BookingComment" FromRole="Comment" ToRole="Booking" />
+    <Property Name="BookingId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Introduction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Word" Type="String" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="Appointment.DoctorIntroduction" FromRole="Introduction" ToRole="Doctor" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="BookingPatient">
+    <End Type="Appointment.Booking" Role="Booking" Multiplicity="*" />
+    <End Type="Appointment.Patient" Role="Patient" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BookingDoctor">
+    <End Type="Appointment.Booking" Role="Booking" Multiplicity="*" />
+    <End Type="Appointment.Doctor" Role="Doctor" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BookingComment">
+    <End Type="Appointment.Booking" Role="Booking" Multiplicity="1" />
+    <End Type="Appointment.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorIntroduction">
+    <End Type="Appointment.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="Appointment.Introduction" Role="Introduction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Introduction">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

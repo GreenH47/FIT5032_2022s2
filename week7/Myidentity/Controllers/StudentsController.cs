@@ -21,7 +21,7 @@ namespace Myidentity.Controllers
         {
             var userId = User.Identity.GetUserId();
             var students = db.Students.Where(s => s.UserId == userId).ToList();
-            return View(db.Students.ToList());
+            return View(students);
         }
 
         // GET: Students/Details/5

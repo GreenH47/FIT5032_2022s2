@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="PatientSet" EntityType="Model.Patient" />
+    <EntitySet Name="DoctorSet" EntityType="Model.Doctor" />
+    <EntitySet Name="BookingSet" EntityType="Model.Booking" />
+    <EntitySet Name="CommentSet" EntityType="Model.Comment" />
+    <EntitySet Name="IntroductionSet" EntityType="Model.Introduction" />
+    <AssociationSet Name="PatientBooking" Association="Model.PatientBooking">
+      <End Role="Patient" EntitySet="PatientSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorBooking" Association="Model.DoctorBooking">
+      <End Role="Doctor" EntitySet="DoctorSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorIntroduction" Association="Model.DoctorIntroduction">
+      <End Role="Doctor" EntitySet="DoctorSet" />
+      <End Role="Introduction" EntitySet="IntroductionSet" />
+    </AssociationSet>
+    <AssociationSet Name="BookingComment" Association="Model.BookingComment">
+      <End Role="Booking" EntitySet="BookingSet" />
+      <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Model.PatientBooking" FromRole="Patient" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" />
+    <Property Name="LastName" Type="String" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Model.DoctorBooking" FromRole="Doctor" ToRole="Booking" />
+    <NavigationProperty Name="Introduction" Relationship="Model.DoctorIntroduction" FromRole="Doctor" ToRole="Introduction" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="Model.PatientBooking" FromRole="Booking" ToRole="Patient" />
+    <Property Name="PatientId" Type="String" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="Model.DoctorBooking" FromRole="Booking" ToRole="Doctor" />
+    <Property Name="DoctorId" Type="String" Nullable="false" />
+    <NavigationProperty Name="Comment" Relationship="Model.BookingComment" FromRole="Booking" ToRole="Comment" />
+  </EntityType>
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" />
+    <Property Name="Word" Type="String" Nullable="false" />
+    <Property Name="Star" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="Booking" Relationship="Model.BookingComment" FromRole="Comment" ToRole="Booking" />
+    <Property Name="BookingId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Introduction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Word" Type="String" Nullable="false" />
+    <NavigationProperty Name="Doctor" Relationship="Model.DoctorIntroduction" FromRole="Introduction" ToRole="Doctor" />
+    <Property Name="DoctorId" Type="String" Nullable="false" />
+  </EntityType>
+  <Association Name="PatientBooking">
+    <End Type="Model.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorBooking">
+    <End Type="Model.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorIntroduction">
+    <End Type="Model.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="Model.Introduction" Role="Introduction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Introduction">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BookingComment">
+    <End Type="Model.Booking" Role="Booking" Multiplicity="1" />
+    <End Type="Model.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="BookingId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
