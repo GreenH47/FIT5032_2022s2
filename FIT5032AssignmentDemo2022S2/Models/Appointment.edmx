@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="PatientSet" EntityType="Model.Store.PatientSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DoctorSet" EntityType="Model.Store.DoctorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BookingSet" EntityType="Model.Store.BookingSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Model.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="PatientBooking" Association="Model.Store.PatientBooking">
+      <End Role="Patient" EntitySet="PatientSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorBooking" Association="Model.Store.DoctorBooking">
+      <End Role="Doctor" EntitySet="DoctorSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="PatientSet">
+    <Key>
+      <PropertyRef Name="PatientId" />
+    </Key>
+    <Property Name="PatientId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DoctorSet">
+    <Key>
+      <PropertyRef Name="DoctorId" />
+    </Key>
+    <Property Name="DoctorId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BookingSet">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientPatientId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DoctorDoctorId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="RoleId" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <Association Name="PatientBooking">
+    <End Role="Patient" Type="Model.Store.PatientSet" Multiplicity="1" />
+    <End Role="Booking" Type="Model.Store.BookingSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="PatientPatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorBooking">
+    <End Role="Doctor" Type="Model.Store.DoctorSet" Multiplicity="1" />
+    <End Role="Booking" Type="Model.Store.BookingSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="DoctorDoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PatientSet" EntityType="Model.Patient" />
+          <EntitySet Name="DoctorSet" EntityType="Model.Doctor" />
+          <EntitySet Name="BookingSet" EntityType="Model.Booking" />
+          <AssociationSet Name="PatientBooking" Association="Model.PatientBooking">
+            <End Role="Patient" EntitySet="PatientSet" />
+            <End Role="Booking" EntitySet="BookingSet" />
+          </AssociationSet>
+          <AssociationSet Name="DoctorBooking" Association="Model.DoctorBooking">
+            <End Role="Doctor" EntitySet="DoctorSet" />
+            <End Role="Booking" EntitySet="BookingSet" />
+          </AssociationSet>
+          <EntitySet Name="AspNetUserRoles" EntityType="Model.AspNetUserRoles" />
+        </EntityContainer>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="PatientId" />
+          </Key>
+          <Property Name="PatientId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Booking" Relationship="Model.PatientBooking" FromRole="Patient" ToRole="Booking" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Booking" Relationship="Model.DoctorBooking" FromRole="Doctor" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Patient" Relationship="Model.PatientBooking" FromRole="Booking" ToRole="Patient" />
+          <Property Name="PatientPatientId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Doctor" Relationship="Model.DoctorBooking" FromRole="Booking" ToRole="Doctor" />
+          <Property Name="DoctorDoctorId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="PatientBooking">
+          <End Type="Model.Patient" Role="Patient" Multiplicity="1" />
+          <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="PatientId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="PatientPatientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DoctorBooking">
+          <End Type="Model.Doctor" Role="Doctor" Multiplicity="1" />
+          <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="DoctorDoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="PatientSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Patient)">
+        <MappingFragment StoreEntitySet="PatientSet">
+          <ScalarProperty Name="PatientId" ColumnName="PatientId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DoctorSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Doctor)">
+        <MappingFragment StoreEntitySet="DoctorSet">
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookingSet">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Booking)">
+        <MappingFragment StoreEntitySet="BookingSet">
+          <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+          <ScalarProperty Name="PatientPatientId" ColumnName="PatientPatientId" />
+          <ScalarProperty Name="DoctorDoctorId" ColumnName="DoctorDoctorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.AspNetUserRoles)">
+        <MappingFragment StoreEntitySet="AspNetUserRoles">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

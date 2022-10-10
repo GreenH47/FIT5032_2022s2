@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="PatientSet" EntityType="Model.Patient" />
+    <EntitySet Name="DoctorSet" EntityType="Model.Doctor" />
+    <EntitySet Name="BookingSet" EntityType="Model.Booking" />
+    <AssociationSet Name="PatientBooking" Association="Model.PatientBooking">
+      <End Role="Patient" EntitySet="PatientSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorBooking" Association="Model.DoctorBooking">
+      <End Role="Doctor" EntitySet="DoctorSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <EntitySet Name="AspNetUserRoles" EntityType="Model.AspNetUserRoles" />
+  </EntityContainer>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientId" />
+    </Key>
+    <Property Name="PatientId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Booking" Relationship="Model.PatientBooking" FromRole="Patient" ToRole="Booking" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="DoctorId" />
+    </Key>
+    <Property Name="DoctorId" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Category" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Booking" Relationship="Model.DoctorBooking" FromRole="Doctor" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Patient" Relationship="Model.PatientBooking" FromRole="Booking" ToRole="Patient" />
+    <Property Name="PatientPatientId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Doctor" Relationship="Model.DoctorBooking" FromRole="Booking" ToRole="Doctor" />
+    <Property Name="DoctorDoctorId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <Association Name="PatientBooking">
+    <End Type="Model.Patient" Role="Patient" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="PatientPatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorBooking">
+    <End Type="Model.Doctor" Role="Doctor" Multiplicity="1" />
+    <End Type="Model.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="DoctorDoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="RoleId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

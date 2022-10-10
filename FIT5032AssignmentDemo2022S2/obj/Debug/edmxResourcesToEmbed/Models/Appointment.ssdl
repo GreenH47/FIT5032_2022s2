@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="PatientSet" EntityType="Model.Store.PatientSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DoctorSet" EntityType="Model.Store.DoctorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BookingSet" EntityType="Model.Store.BookingSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Model.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="PatientBooking" Association="Model.Store.PatientBooking">
+      <End Role="Patient" EntitySet="PatientSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+    <AssociationSet Name="DoctorBooking" Association="Model.Store.DoctorBooking">
+      <End Role="Doctor" EntitySet="DoctorSet" />
+      <End Role="Booking" EntitySet="BookingSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="PatientSet">
+    <Key>
+      <PropertyRef Name="PatientId" />
+    </Key>
+    <Property Name="PatientId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DoctorSet">
+    <Key>
+      <PropertyRef Name="DoctorId" />
+    </Key>
+    <Property Name="DoctorId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Category" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BookingSet">
+    <Key>
+      <PropertyRef Name="BookingId" />
+    </Key>
+    <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PatientPatientId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DoctorDoctorId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="RoleId" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <Association Name="PatientBooking">
+    <End Role="Patient" Type="Model.Store.PatientSet" Multiplicity="1" />
+    <End Role="Booking" Type="Model.Store.BookingSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="PatientPatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DoctorBooking">
+    <End Role="Doctor" Type="Model.Store.DoctorSet" Multiplicity="1" />
+    <End Role="Booking" Type="Model.Store.BookingSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="DoctorDoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
