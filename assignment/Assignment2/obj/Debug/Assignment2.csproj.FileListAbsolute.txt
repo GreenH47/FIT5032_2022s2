@@ -106,3 +106,13 @@ D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.csproj.C
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.csproj.CopyComplete
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.pdb
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Net.Http.Formatting.dll
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.dll
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.WebHost.dll
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Net.Http.Formatting.xml
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.xml
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.WebHost.xml
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\SendGrid.dll
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\StarkbankEcdsa.dll
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\SendGrid.pdb
+D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\SendGrid.xml
