@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Assignment2.Models
 {
@@ -16,6 +17,7 @@ namespace Assignment2.Models
         [Required(ErrorMessage = "Please enter a subject.")]
         public string Subject { get; set; }
 
+        [AllowHtml]
         [Required(ErrorMessage = "Please enter the contents")]
         public string Contents { get; set; }
 
