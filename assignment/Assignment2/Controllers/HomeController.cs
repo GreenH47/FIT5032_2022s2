@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Assignment2.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
