@@ -27,8 +27,16 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Patients", "Index", "Patients")</li>
+
                         <li>@Html.ActionLink("Send_Email", "Send_Email", "Home")</li>
+                    }
+                    @if (User.IsInRole("Patient") | User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Patients", "Index", "Patients")</li>
+                    }
+                    @if (User.IsInRole("Doctor") | User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Doctors", "Index", "Doctors")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

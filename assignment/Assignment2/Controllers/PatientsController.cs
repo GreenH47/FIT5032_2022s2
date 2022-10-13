@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Assignment2.Controllers
 {
+    [Authorize(Roles = "Patient,Admin")]
     public class PatientsController : Controller
     {
         private AppointmentContainer db = new AppointmentContainer();
@@ -25,6 +26,13 @@ namespace Assignment2.Controllers
             var patients = db.Patients.Where(s => s.UserId ==
             userId).ToList();
 
+            //admin can view every list
+            if (User.IsInRole("Admin"))
+            {
+                patients = db.Patients.ToList();
+                //userId = User.Select(m => m.RoleId).ToList();
+            }
+
             var loggedInUser= identityDB.Users.FirstOrDefault(u => u.Id  == userId);
 
             var patientViewList = patients.Select(p => new PatientViewModel
@@ -35,7 +43,8 @@ namespace Assignment2.Controllers
                 Email = loggedInUser.Email
             }).ToList();
 
-
+            
+            
             return View(patientViewList);
         }
 
@@ -55,6 +64,7 @@ namespace Assignment2.Controllers
         }
 
         // GET: Patients/Create
+        [AllowAnonymous]
         public ActionResult Create()
         {
             return View();
@@ -65,7 +75,7 @@ namespace Assignment2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName")] Patient patient)
         {
             patient.UserId = User.Identity.GetUserId();
