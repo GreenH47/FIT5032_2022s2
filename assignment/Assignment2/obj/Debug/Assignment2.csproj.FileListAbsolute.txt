@@ -69,7 +69,12 @@ D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\Microsoft.Owin.Security.Tw
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\Microsoft.Web.Infrastructure.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\Newtonsoft.Json.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\Owin.dll
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\SendGrid.dll
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\StarkbankEcdsa.dll
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Net.Http.Formatting.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Helpers.dll
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Http.dll
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Http.WebHost.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Mvc.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Optimization.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Razor.dll
@@ -77,6 +82,12 @@ D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.WebPages.Deploy
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.WebPages.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.WebPages.Razor.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\WebGrease.dll
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\Newtonsoft.Json.xml
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\SendGrid.pdb
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\SendGrid.xml
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Net.Http.Formatting.xml
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Http.xml
+D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Http.WebHost.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Helpers.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Mvc.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Optimization.xml
@@ -84,7 +95,6 @@ D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.Razor.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.WebPages.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.WebPages.Deployment.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\System.Web.WebPages.Razor.xml
-D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\Newtonsoft.Json.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\Antlr3.Runtime.pdb
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\EntityFramework.xml
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\bin\EntityFramework.SqlServer.xml
@@ -106,13 +116,3 @@ D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.csproj.C
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.csproj.CopyComplete
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.dll
 D:\Monash\fit5032\GITCLONE\assignment\assignment2\obj\Debug\Assignment2.pdb
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Net.Http.Formatting.dll
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.dll
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.WebHost.dll
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Net.Http.Formatting.xml
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.xml
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\System.Web.Http.WebHost.xml
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\SendGrid.dll
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\StarkbankEcdsa.dll
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\SendGrid.pdb
-D:\Monash\fit5032\GITCLONE\assignment\Assignment2\bin\SendGrid.xml

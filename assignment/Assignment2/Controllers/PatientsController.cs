@@ -15,6 +15,7 @@ namespace Assignment2.Controllers
     public class PatientsController : Controller
     {
         private AppointmentContainer db = new AppointmentContainer();
+        private ApplicationDbContext identityDB = new ApplicationDbContext();
 
         // GET: Patients
         [Authorize]
@@ -23,8 +24,19 @@ namespace Assignment2.Controllers
             var userId = User.Identity.GetUserId();
             var patients = db.Patients.Where(s => s.UserId ==
             userId).ToList();
-            
-            return View(patients);
+
+            var loggedInUser= identityDB.Users.FirstOrDefault(u => u.Id  == userId);
+
+            var patientViewList = patients.Select(p => new PatientViewModel
+            {
+                Id = p.Id,
+                FirstName = p.FirstName,
+                LastName = p.LastName,
+                Email = loggedInUser.Email
+            }).ToList();
+
+
+            return View(patientViewList);
         }
 
         // GET: Patients/Details/5
