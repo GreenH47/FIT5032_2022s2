@@ -22,20 +22,24 @@ namespace Assignment2.Utils
             var plainTextContent = contents;
             var htmlContent = "<p>" + contents + "</p>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            using (var memoryStream = new MemoryStream())
+            if (postedFile != null)
             {
-                // file to input stream
-                postedFile.InputStream.CopyTo(memoryStream);
-                // input stream to arraay
-                byte[] bytes = memoryStream.ToArray();
-                Attachment attachment = new Attachment();
-                //to 664 type string
-                attachment.Content = Convert.ToBase64String(bytes);
-                attachment.Filename = postedFile.FileName; 
-                //file to message
-                msg.AddAttachment(attachment.Filename, attachment.Content);
+                using (var memoryStream = new MemoryStream())
+                {
+                    // file to input stream
+                    postedFile.InputStream.CopyTo(memoryStream);
+                    // input stream to arraay
+                    byte[] bytes = memoryStream.ToArray();
+                    Attachment attachment = new Attachment();
+                    //to 664 type string
+                    attachment.Content = Convert.ToBase64String(bytes);
+                    attachment.Filename = postedFile.FileName;
+                    //file to message
+                    msg.AddAttachment(attachment.Filename, attachment.Content);
 
+                }
             }
+            
             var response = client.SendEmailAsync(msg);
         }
 

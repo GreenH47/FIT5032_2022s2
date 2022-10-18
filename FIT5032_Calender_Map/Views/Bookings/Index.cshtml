@@ -1,0 +1,97 @@
+﻿@model IEnumerable<FIT5032_Calender_Map.Models.Booking>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+
+</table>
+
+<div class="container">
+    <div id='calendar'></div>
+</div>
+
+<link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/fullcalendar.min.js"></script>
+
+@section Scripts
+{
+    <script>
+        var events = [];
+        @foreach (var d in Model)
+        {
+                @: var event = { "Title": '@d.Description', "start": '@d.StartDate', "end": '@d.EndDate', "url": '/Bookings/edit/' + '@d.Id' };
+                @: events.push(event);
+        };
+        var event2 = {
+            start: '2022-10-14T10:00:00',
+            end: '2022-10-14T16:00:00',
+            display: 'background'
+        }
+        events.push(event2);
+        alert(events);
+
+        $(document).ready(function () {
+				$('#calendar').fullCalendar({
+        			header: {
+            			left: 'prev,next today',
+            			center: 'title',
+            			right: 'month,agendaWeek,agendaDay'
+					},
+            		firstDay: 1, //The day that each week begins (Monday=1)
+            		slotMinutes: 60,
+                    events: events,
+                    eventClick: function (info) {
+                        alert(
+                            'Clicked ' + eventObj.title + '.\n' +
+                            'Will open ' + eventObj.url + ' in a new tab'
+                        );
+                        // change the border color just for fun
+                        //info.el.style.borderColor = 'red';
+                        // navigate to specfic url
+                        $(location).prop('href', info.event.url)
+                    }
+        		});
+    		});
+    </script>
+}
