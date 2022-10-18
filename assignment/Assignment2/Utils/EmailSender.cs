@@ -31,7 +31,7 @@ namespace Assignment2.Utils
                     // input stream to arraay
                     byte[] bytes = memoryStream.ToArray();
                     Attachment attachment = new Attachment();
-                    //to 664 type string
+                    //to 64 type string
                     attachment.Content = Convert.ToBase64String(bytes);
                     attachment.Filename = postedFile.FileName;
                     //file to message

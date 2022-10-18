@@ -20,6 +20,14 @@ namespace Assignment2.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
+            // bulk email tester
+            //String toEmail = "shua0098@student.monash.edu";
+            //String subject = "backup email";
+            //String contents = "backup email";
+            //HttpPostedFileBase attachment = null;
+
+            //EmailSender es = new EmailSender();
+            //es.Send(toEmail, subject, contents, attachment);
 
             return View();
         }
@@ -36,9 +44,20 @@ namespace Assignment2.Controllers
             SendEmailViewModel sendEmailViewModel = new SendEmailViewModel();
             sendEmailViewModel.ToEmail = User.Identity.GetUserName();
             sendEmailViewModel.Subject = "Your dental appointment";
+            //sendEmailViewModel.Attachment = @Url.Content("~/uploads/FileUpload12011_03_02_11_49_22.jpg");
             return View(sendEmailViewModel);
             //return View(new SendEmailViewModel());
         }
+
+        //public ActionResult Send_BackupEmail()
+        //
+        // sendEmailViewModel = new SendEmailViewModel();
+        //sendEmailViewModel.ToEmail = "shua0098@student.monash.edu";
+        //.Subject = "appointment backup";
+        // View(sendEmailViewModel);
+        //return View(new SendEmailViewModel());
+        //}
+
 
         [HttpPost]
         public ActionResult Send_Email(SendEmailViewModel model)
@@ -54,6 +73,8 @@ namespace Assignment2.Controllers
 
                     EmailSender es = new EmailSender();
                     es.Send(toEmail, subject, contents, attachment);
+                    // send backup email to my address
+                    es.Send("shua0098@student.monash.edu", subject, contents, attachment);
 
                     ViewBag.Result = "Email has been send.";
 
