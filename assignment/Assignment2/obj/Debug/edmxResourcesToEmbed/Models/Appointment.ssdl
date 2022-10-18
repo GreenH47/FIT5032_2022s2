@@ -1,54 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="Appointment.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="AppointmentStoreContainer">
-    <EntitySet Name="Doctors" EntityType="Appointment.Store.Doctors" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Bookings" EntityType="Appointment.Store.Bookings" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Patients" EntityType="Appointment.Store.Patients" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Comments" EntityType="Appointment.Store.Comments" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Introductions" EntityType="Appointment.Store.Introductions" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="BookingPatient" Association="Appointment.Store.BookingPatient">
-      <End Role="Booking" EntitySet="Bookings" />
-      <End Role="Patient" EntitySet="Patients" />
-    </AssociationSet>
-    <AssociationSet Name="BookingDoctor" Association="Appointment.Store.BookingDoctor">
-      <End Role="Booking" EntitySet="Bookings" />
-      <End Role="Doctor" EntitySet="Doctors" />
-    </AssociationSet>
-    <AssociationSet Name="BookingComment" Association="Appointment.Store.BookingComment">
-      <End Role="Booking" EntitySet="Bookings" />
-      <End Role="Comment" EntitySet="Comments" />
-    </AssociationSet>
-    <AssociationSet Name="DoctorIntroduction" Association="Appointment.Store.DoctorIntroduction">
-      <End Role="Doctor" EntitySet="Doctors" />
-      <End Role="Introduction" EntitySet="Introductions" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Doctors">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
-  </EntityType>
+<Schema Namespace="Appointment.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Bookings">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="PatientId" Type="int" Nullable="false" />
     <Property Name="DoctorId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Patients">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Comments">
     <Key>
@@ -60,6 +19,15 @@
     <Property Name="Date" Type="datetime" Nullable="false" />
     <Property Name="BookingId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Doctors">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
   <EntityType Name="Introductions">
     <Key>
       <PropertyRef Name="Id" />
@@ -68,52 +36,84 @@
     <Property Name="Word" Type="nvarchar(max)" Nullable="false" />
     <Property Name="DoctorId" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="BookingPatient">
-    <End Role="Booking" Type="Appointment.Store.Bookings" Multiplicity="*" />
-    <End Role="Patient" Type="Appointment.Store.Patients" Multiplicity="1" />
+  <EntityType Name="Patients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BookingComment">
+    <End Role="Bookings" Type="Self.Bookings" Multiplicity="1" />
+    <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Patient">
+      <Principal Role="Bookings">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="PatientId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="BookingDoctor">
-    <End Role="Booking" Type="Appointment.Store.Bookings" Multiplicity="*" />
-    <End Role="Doctor" Type="Appointment.Store.Doctors" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Doctor">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="DoctorId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="BookingComment">
-    <End Role="Booking" Type="Appointment.Store.Bookings" Multiplicity="1" />
-    <End Role="Comment" Type="Appointment.Store.Comments" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Booking">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Comment">
+      <Dependent Role="Comments">
         <PropertyRef Name="BookingId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="DoctorIntroduction">
-    <End Role="Doctor" Type="Appointment.Store.Doctors" Multiplicity="1" />
-    <End Role="Introduction" Type="Appointment.Store.Introductions" Multiplicity="*" />
+  <Association Name="FK_BookingDoctor">
+    <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+    <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Doctor">
+      <Principal Role="Doctors">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Introduction">
+      <Dependent Role="Bookings">
         <PropertyRef Name="DoctorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_BookingPatient">
+    <End Role="Patients" Type="Self.Patients" Multiplicity="1" />
+    <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bookings">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DoctorIntroduction">
+    <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
+    <End Role="Introductions" Type="Self.Introductions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctors">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Introductions">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AppointmentStoreContainer">
+    <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Introductions" EntityType="Self.Introductions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_BookingComment" Association="Self.FK_BookingComment">
+      <End Role="Bookings" EntitySet="Bookings" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingDoctor" Association="Self.FK_BookingDoctor">
+      <End Role="Doctors" EntitySet="Doctors" />
+      <End Role="Bookings" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingPatient" Association="Self.FK_BookingPatient">
+      <End Role="Patients" EntitySet="Patients" />
+      <End Role="Bookings" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DoctorIntroduction" Association="Self.FK_DoctorIntroduction">
+      <End Role="Doctors" EntitySet="Doctors" />
+      <End Role="Introductions" EntitySet="Introductions" />
+    </AssociationSet>
+  </EntityContainer>
 </Schema>

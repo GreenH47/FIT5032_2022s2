@@ -21,7 +21,7 @@ namespace Assignment2.Models
         }
     
         public int Id { get; set; }
-        public string Date { get; set; }
+        public System.DateTime Date { get; set; }
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
     

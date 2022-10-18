@@ -166,9 +166,9 @@ namespace Assignment2.Controllers
                     // add register user to patient roles
                     await UserManager.AddToRoleAsync(user.Id, "Patient");
 
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "Home");
                     // new user RedirectTo change their info
-                    //return RedirectToAction("Create", "Patient");
+                    return RedirectToAction("Create", "Patients");
                 }
                 AddErrors(result);
             }
