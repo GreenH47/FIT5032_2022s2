@@ -7,16 +7,23 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Assignment2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Assignment2.Controllers
 {
+    [Authorize]
     public class BookingsController : Controller
     {
         private AppointmentContainer db = new AppointmentContainer();
 
         // GET: Bookings
+        [AllowAnonymous]
         public ActionResult Index()
         {
+            if (User.Identity.GetUserId() == null)
+            {
+                return Redirect("/Account/Login");
+            }
             var bookings = db.Bookings.Include(b => b.Patient).Include(b => b.Doctor);
             return View(bookings.ToList());
         }

@@ -109,6 +109,7 @@ namespace Assignment2.Controllers
             return View(doctor);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Doctors/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -124,6 +125,7 @@ namespace Assignment2.Controllers
             return View(doctor);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Doctors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

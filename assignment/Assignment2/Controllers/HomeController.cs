@@ -44,7 +44,7 @@ namespace Assignment2.Controllers
             SendEmailViewModel sendEmailViewModel = new SendEmailViewModel();
             sendEmailViewModel.ToEmail = User.Identity.GetUserName();
             sendEmailViewModel.Subject = "Your dental appointment";
-            //sendEmailViewModel.Attachment = @Url.Content("~/uploads/FileUpload12011_03_02_11_49_22.jpg");
+            //sendEmailViewModel.Attachment = msg.AddAttachment(attachment.Filename, attachment.Content);
             return View(sendEmailViewModel);
             //return View(new SendEmailViewModel());
         }
