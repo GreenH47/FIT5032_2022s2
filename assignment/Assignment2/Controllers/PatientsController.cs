@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Assignment2.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Assignment2.Controllers
 {
@@ -30,20 +31,22 @@ namespace Assignment2.Controllers
             if (User.IsInRole("Admin"))
             {
                 patients = db.Patients.ToList();
-                //userId = User.Select(m => m.RoleId).ToList();
+                //userId = User.Select(m => m.userId).ToList();
             }
 
             var loggedInUser= identityDB.Users.FirstOrDefault(u => u.Id  == userId);
+            ApplicationUserManager _userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var temp = _userManager.FindById("4eebc740-bfdb-4a6e-bbe9-69af6f8e64f8").UserName;
 
             var patientViewList = patients.Select(p => new PatientViewModel
             {
                 Id = p.Id,
                 FirstName = p.FirstName,
                 LastName = p.LastName,
-                Email = loggedInUser.Email
+                Email = _userManager.FindById(p.UserId).UserName,
             }).ToList();
 
-            
+       
             
             return View(patientViewList);
         }

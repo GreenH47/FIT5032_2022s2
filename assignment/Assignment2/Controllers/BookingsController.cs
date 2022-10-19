@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Assignment2.Models;
+using Assignment2.Utils;
 using Microsoft.AspNet.Identity;
 
 namespace Assignment2.Controllers
@@ -58,15 +59,27 @@ namespace Assignment2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Date,PatientId,DoctorId")] Booking booking)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Bookings.Add(booking);
                 db.SaveChanges();
+
+                EmailSender es = new EmailSender();
+                String subject = "Your dental appointment";
+                string contents = "Your new dental appointment in" + booking.Date;
+                HttpPostedFileBase attachment = null;
+                es.Send("shua0098@student.monash.edu", subject, contents, attachment);
+
                 return RedirectToAction("Index");
             }
 
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName", booking.PatientId);
             ViewBag.DoctorId = new SelectList(db.Doctors, "Id", "FirstName", booking.DoctorId);
+
+            
+            
+
             return View(booking);
         }
 

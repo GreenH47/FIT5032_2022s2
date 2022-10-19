@@ -44,19 +44,22 @@ namespace Assignment2.Controllers
             SendEmailViewModel sendEmailViewModel = new SendEmailViewModel();
             sendEmailViewModel.ToEmail = User.Identity.GetUserName();
             sendEmailViewModel.Subject = "Your dental appointment";
-            //sendEmailViewModel.Attachment = msg.AddAttachment(attachment.Filename, attachment.Content);
+            sendEmailViewModel.Contents = "Your dental appointment  details";
+            //sendEmailViewModel.Attachment = { System.Web.HttpPostedFileWrapper};
             return View(sendEmailViewModel);
             //return View(new SendEmailViewModel());
         }
 
-        //public ActionResult Send_BackupEmail()
-        //
-        // sendEmailViewModel = new SendEmailViewModel();
-        //sendEmailViewModel.ToEmail = "shua0098@student.monash.edu";
-        //.Subject = "appointment backup";
-        // View(sendEmailViewModel);
-        //return View(new SendEmailViewModel());
-        //}
+        public ActionResult Send_bulkEmail()
+        {
+            SendEmailViewModel sendEmailViewModel = new SendEmailViewModel();
+            sendEmailViewModel.ToEmail = "shua0098@student.monash.edu";
+            sendEmailViewModel.Subject = "Your dental appointment";
+            sendEmailViewModel.Contents = "Your dental appointment  details";
+            //sendEmailViewModel.Attachment = { System.Web.HttpPostedFileWrapper};
+            return View(sendEmailViewModel);
+            //return View(new SendEmailViewModel());
+        }
 
 
         [HttpPost]
