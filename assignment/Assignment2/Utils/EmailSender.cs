@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Assignment2.Utils
 {
+    [ValidateInput(false)]
     public class EmailSender
     {
         // Please use your API KEY here.
@@ -23,16 +25,9 @@ namespace Assignment2.Utils
             var plainTextContent = contents;
             var htmlContent = "<p>" + contents + "</p>";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            if (postedFile == null)
-            {
-                Attachment attachment = new Attachment();
-                string author = "Your make a new appointment in: "+ DateTime.Now;
-                byte[] bytestwo = Encoding.ASCII.GetBytes(author);
-                attachment.Content = Convert.ToBase64String(bytestwo);
-                msg.AddAttachment("dental appointment.txt", attachment.Content);
-            }
+            
 
-            if (postedFile != null)
+            if(from == null)
             {
                 using (var memoryStream = new MemoryStream())
                 {
@@ -41,9 +36,11 @@ namespace Assignment2.Utils
                     // input stream to arraay
                     byte[] bytes = memoryStream.ToArray();
                     Attachment attachment = new Attachment();
-                    string author = "Mahesh Chand";
+
+                    //string author = "Mahesh Chand";
                     // Convert a C# string to a byte array  
-                    byte[] bytestwo = Encoding.ASCII.GetBytes(author);
+                    //byte[] bytestwo = Encoding.ASCII.GetBytes(author);
+
                     //to 64 type string
                     attachment.Content = Convert.ToBase64String(bytes);
                     attachment.Filename = postedFile.FileName;
@@ -52,7 +49,15 @@ namespace Assignment2.Utils
 
                 }
             }
-            
+            else
+            {
+                Attachment attachment = new Attachment();
+                string author = "Your make a new appointment in: " + DateTime.Now;
+                byte[] bytestwo = Encoding.ASCII.GetBytes(author);
+                attachment.Content = Convert.ToBase64String(bytestwo);
+                msg.AddAttachment("dental appointment.txt", attachment.Content);
+            }
+
             var response = client.SendEmailAsync(msg);
         }
 
